@@ -1,6 +1,7 @@
 <?php
 class ControllerCommonColumnLeft extends Controller {
 	public function index() {
+		
 		if (isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ((string)$this->request->get['user_token'] == $this->session->data['user_token'])) {
 			$this->load->language('common/column_left');
 
@@ -284,6 +285,27 @@ class ControllerCommonColumnLeft extends Controller {
 					'name'	   => $this->language->get('text_return'),
 					'href'     => $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token']),
 					'children' => array()
+				);
+			}
+
+			// Notice
+			$notice = array();
+
+			if ($this->user->hasPermission('access', 'notice/all')) {
+				$notice[] = array(
+					'name'	   => $this->language->get('text_notice_list'),
+					'href'     => $this->url->link('notice/all', 'user_token=' . $this->session->data['user_token']),
+					'children' => array()
+				);
+			}
+
+			if ($notice) {
+				$data['menus'][] = array(
+					'id'       => 'menu-notice',
+					'icon'	   => 'fa-shopping-cart',
+					'name'	   => $this->language->get('text_notice'),
+					'href'     => '',
+					'children' => $notice
 				);
 			}
 

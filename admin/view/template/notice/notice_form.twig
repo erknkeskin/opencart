@@ -1,0 +1,170 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="submit" form="form-notice" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-category">
+          <ul class="nav nav-tabs" id="language">
+                {% for language in languages %}
+                  <li class="nav-item"><a href="#language{{ language.language_id }}" data-toggle="tab" class="nav-link"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
+                {% endfor %}
+              </ul>
+              <div class="tab-content">
+                {% for language in languages %}
+                  <div class="tab-pane" id="language{{ language.language_id }}">
+                    <div class="form-group row required">
+                      <label for="input-title{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_title }}</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="notice_description[{{ language.language_id }}][title]" value="{{ notice_description[language.language_id] ? notice_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title{{ language.language_id }}" class="form-control"/>
+                        {% if error_name[language.language_id] %}
+                          <div class="invalid-tooltip">{{ error_title[language.language_id] }}</div>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="form-group row required">
+                      <label for="input-summary{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_summary }}</label>
+                      <div class="col-sm-10">
+                        <textarea name="notice_description[{{ language.language_id }}][summary]" placeholder="{{ entry_summary }}" id="input-summary{{ language.language_id }}" class="form-control">{{ notice_description[language.language_id] ? notice_description[language.language_id].summary }}</textarea>
+                      </div>
+                    </div>
+                    <div class="form-group row required">
+                      <label for="input-description{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+                      <div class="col-sm-10">
+                        <textarea name="notice_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ notice_description[language.language_id] ? notice_description[language.language_id].description }}</textarea>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="input-meta-title{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="notice_description[{{ language.language_id }}][meta_title]" value="{{ notice_description[language.language_id] ? notice_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control"/>
+                        {% if error_meta_title[language.language_id] %}
+                          <div class="invalid-tooltip">{{ error_meta_title[language.language_id] }}</div>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="input-meta-keyword{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
+                      <div class="col-sm-10">
+                        <textarea name="notice_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword{{ language.language_id }}" class="form-control">{{ notice_description[language.language_id] ? notice_description[language.language_id].meta_keyword }}</textarea>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="input-meta-description{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
+                      <div class="col-sm-10">
+                        <textarea name="notice_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description{{ language.language_id }}" class="form-control">{{ notice_description[language.language_id] ? notice_description[language.language_id].meta_description }}</textarea>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="input-sort" class="col-sm-2 col-form-label">{{ entry_sort }}</label>
+                        <div class="col-sm-10">
+                        <input type="text" name="sort" value="{{ sort }}" placeholder="{{ entry_sort }}" id="input-sort" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+                        <div class="col-sm-10">
+                        <select name="status" id="input-status" class="form-control">
+                            {% if status %}
+                            <option value="1" selected="selected">{{ text_enabled }}</option>
+                            <option value="0">{{ text_disabled }}</option>
+                            {% else %}
+                            <option value="1">{{ text_enabled }}</option>
+                            <option value="0" selected="selected">{{ text_disabled }}</option>
+                            {% endif %}
+                        </select>
+                        </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('textarea[data-toggle=\'ckeditor\']').ckeditor();
+
+$('input[name=\'path\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				json.unshift({
+					category_id: 0,
+					name: '{{ text_none }}'
+				});
+
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['category_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'path\']').val(item['label']);
+		$('input[name=\'parent_id\']').val(item['value']);
+	}
+});
+//--></script>
+<script type="text/javascript"><!--
+$('input[name=\'filter\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/filter/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['filter_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter\']').val('');
+
+		$('#category-filter' + item['value']).remove();
+
+		html = '<tr id="category-filter' + item['value'] + '">';
+		html += '  <td>' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '"/></td>';
+		html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+		html += '</tr>';
+
+		$('#category-filter').append(html);
+	}
+});
+
+$('#category-filter').on('click', '.btn', function() {
+	$(this).parent().parent().remove();
+});
+//--></script>
+<script type="text/javascript"><!--
+$('#language li:first-child a').tab('show');
+//--></script>
+{{ footer }}

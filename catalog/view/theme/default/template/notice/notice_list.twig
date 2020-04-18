@@ -1,0 +1,29 @@
+{{ header }}
+<div id="account-return" class="container">
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      {% if notices %}
+       {% for notice in notices %}
+        <div class="card my-3">
+        <h5 class="card-header bg-primary text-white">{{ notice.title }}</h5>
+        <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">
+                {{ notice.summary }}
+            </p>
+            <a href="{{ notice.view }}" class="btn btn-outline-primary float-right">{{ text_notice_more }}</a>
+        </div>
+        </div>
+       {% endfor %}
+        <div class="row">
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
+        </div>
+      {% else %}
+        <p>{{ text_no_results }}</p>
+      {% endif %}
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

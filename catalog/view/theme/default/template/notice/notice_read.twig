@@ -1,0 +1,18 @@
+{{ header }}
+<div id="account-return" class="container">
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      {% if notice %}
+       <h1>{{ notice.title }}</h1>
+       <div class="clearfix"></div>
+       <p>
+        {{ notice.description|raw }}
+       </p>
+      {% else %}
+        <p>{{ text_no_results }}</p>
+      {% endif %}
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

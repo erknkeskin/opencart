@@ -69,11 +69,13 @@ class ControllerCommonHeader extends Controller {
 		$data['shopping_cart'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 		$data['contact'] = $this->url->link('information/contact', 'language=' . $this->config->get('config_language'));
+		$data['notice'] = $this->url->link('notice/notice', 'language=' . $this->config->get('config_language'));
 		$data['telephone'] = $this->config->get('config_telephone');
 
 		$data['cookie'] = $this->load->controller('common/cookie');
 		$data['language'] = $this->load->controller('common/language');
 		$data['currency'] = $this->load->controller('common/currency');
+		//$data['notice'] = $this->load->controller('notice/notice');
 		$data['search'] = $this->load->controller('common/search');
 		$data['cart'] = $this->load->controller('common/cart');
 		$data['menu'] = $this->load->controller('common/menu');
